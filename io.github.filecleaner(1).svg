@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 512 512" width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tileBg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5294e2"/>
+      <stop offset="100%" stop-color="#1a5fb4"/>
+    </linearGradient>
+
+    <!-- Clip paths for each window -->
+    <clipPath id="wclip0"><rect x="40"  y="40"  width="208" height="208" rx="14"/></clipPath>
+    <clipPath id="wclip1"><rect x="264" y="40"  width="208" height="208" rx="14"/></clipPath>
+    <clipPath id="wclip2"><rect x="40"  y="264" width="208" height="208" rx="14"/></clipPath>
+    <clipPath id="wclip3"><rect x="264" y="264" width="208" height="208" rx="14"/></clipPath>
+  </defs>
+
+  <!-- App icon squircle background -->
+  <rect width="512" height="512" rx="108" fill="url(#tileBg)"/>
+
+  <!-- Subtle top sheen -->
+  <ellipse cx="256" cy="52" rx="190" ry="44" fill="white" opacity="0.08"/>
+
+  <!-- ══════════════════════════════════════════
+       WINDOW MACRO — repeated 4 times
+       positions: (40,40) (264,40) (40,264) (264,264)
+       only window 3 (bottom-right) is red/delete
+       ══════════════════════════════════════════ -->
+
+  <!-- ── Window 0: top-left, normal ── -->
+  <g>
+    <rect x="44"  y="46"  width="208" height="208" rx="14" fill="#082050" opacity="0.28"/>
+    <g clip-path="url(#wclip0)">
+      <rect x="40" y="40" width="208" height="208" fill="#f2f2f2"/>
+      <rect x="40" y="40" width="208" height="36"  fill="#2d2d2d"/>
+      <circle cx="56" cy="58" r="6" fill="#4a4a4a"/>
+      <circle cx="56" cy="58" r="4" fill="#62a0ea" opacity="0.9"/>
+      <rect x="68" y="54" width="55" height="8" rx="4" fill="white" opacity="0.2"/>
+      <circle cx="232" cy="58" r="7" fill="#e01b24" opacity="0.85"/>
+      <line x1="229" y1="55" x2="235" y2="61" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="235" y1="55" x2="229" y2="61" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="40" y1="76" x2="248" y2="76" stroke="#c0c0c0" stroke-width="1"/>
+      <!-- Row 0 -->
+      <rect x="46" y="86"  width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 54 89 H 65 L 70 94 V 109 H 54 Z" fill="#4a90d9"/><path d="M 65 89 L 65 94 L 70 94 Z" fill="#3678b5"/>
+      <rect x="75" y="95" width="100" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 1 -->
+      <path d="M 54 118 H 65 L 70 123 V 138 H 54 Z" fill="#4a90d9"/><path d="M 65 118 L 65 123 L 70 123 Z" fill="#3678b5"/>
+      <rect x="75" y="124" width="82" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 2 -->
+      <rect x="46" y="147" width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 54 150 H 65 L 70 155 V 170 H 54 Z" fill="#4a90d9"/><path d="M 65 150 L 65 155 L 70 155 Z" fill="#3678b5"/>
+      <rect x="75" y="156" width="118" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 3 -->
+      <path d="M 54 179 H 65 L 70 184 V 199 H 54 Z" fill="#4a90d9"/><path d="M 65 179 L 65 184 L 70 184 Z" fill="#3678b5"/>
+      <rect x="75" y="185" width="90" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 4 -->
+      <rect x="46" y="208" width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 54 211 H 65 L 70 216 V 231 H 54 Z" fill="#4a90d9"/><path d="M 65 211 L 65 216 L 70 216 Z" fill="#3678b5"/>
+      <rect x="75" y="217" width="108" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+    </g>
+    <rect x="40" y="40" width="208" height="208" rx="14" fill="none" stroke="white" stroke-width="1.5" opacity="0.18"/>
+  </g>
+
+  <!-- ── Window 1: top-right, normal ── -->
+  <g>
+    <rect x="268" y="46"  width="208" height="208" rx="14" fill="#082050" opacity="0.28"/>
+    <g clip-path="url(#wclip1)">
+      <rect x="264" y="40" width="208" height="208" fill="#f2f2f2"/>
+      <rect x="264" y="40" width="208" height="36"  fill="#2d2d2d"/>
+      <circle cx="280" cy="58" r="6" fill="#4a4a4a"/>
+      <circle cx="280" cy="58" r="4" fill="#62a0ea" opacity="0.9"/>
+      <rect x="292" y="54" width="55" height="8" rx="4" fill="white" opacity="0.2"/>
+      <circle cx="456" cy="58" r="7" fill="#e01b24" opacity="0.85"/>
+      <line x1="453" y1="55" x2="459" y2="61" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="459" y1="55" x2="453" y2="61" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="264" y1="76" x2="472" y2="76" stroke="#c0c0c0" stroke-width="1"/>
+      <!-- Row 0 -->
+      <rect x="270" y="86"  width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 278 89 H 289 L 294 94 V 109 H 278 Z" fill="#4a90d9"/><path d="M 289 89 L 289 94 L 294 94 Z" fill="#3678b5"/>
+      <rect x="299" y="95" width="86" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 1 -->
+      <path d="M 278 118 H 289 L 294 123 V 138 H 278 Z" fill="#4a90d9"/><path d="M 289 118 L 289 123 L 294 123 Z" fill="#3678b5"/>
+      <rect x="299" y="124" width="112" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 2 -->
+      <rect x="270" y="147" width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 278 150 H 289 L 294 155 V 170 H 278 Z" fill="#4a90d9"/><path d="M 289 150 L 289 155 L 294 155 Z" fill="#3678b5"/>
+      <rect x="299" y="156" width="72" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 3 -->
+      <path d="M 278 179 H 289 L 294 184 V 199 H 278 Z" fill="#4a90d9"/><path d="M 289 179 L 289 184 L 294 184 Z" fill="#3678b5"/>
+      <rect x="299" y="185" width="96" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 4 -->
+      <rect x="270" y="208" width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 278 211 H 289 L 294 216 V 231 H 278 Z" fill="#4a90d9"/><path d="M 289 211 L 289 216 L 294 216 Z" fill="#3678b5"/>
+      <rect x="299" y="217" width="104" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+    </g>
+    <rect x="264" y="40" width="208" height="208" rx="14" fill="none" stroke="white" stroke-width="1.5" opacity="0.18"/>
+  </g>
+
+  <!-- ── Window 2: bottom-left, normal ── -->
+  <g>
+    <rect x="44"  y="270" width="208" height="208" rx="14" fill="#082050" opacity="0.28"/>
+    <g clip-path="url(#wclip2)">
+      <rect x="40" y="264" width="208" height="208" fill="#f2f2f2"/>
+      <rect x="40" y="264" width="208" height="36"  fill="#2d2d2d"/>
+      <circle cx="56" cy="282" r="6" fill="#4a4a4a"/>
+      <circle cx="56" cy="282" r="4" fill="#e01b24" opacity="0.85"/>
+      <rect x="68" y="278" width="55" height="8" rx="4" fill="white" opacity="0.2"/>
+      <circle cx="232" cy="282" r="7" fill="#e01b24" opacity="0.85"/>
+      <line x1="229" y1="279" x2="235" y2="285" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="235" y1="279" x2="229" y2="285" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="40" y1="300" x2="248" y2="300" stroke="#c0c0c0" stroke-width="1"/>
+      <!-- Row 0 -->
+      <rect x="46" y="310" width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 54 313 H 65 L 70 318 V 333 H 54 Z" fill="#4a90d9"/><path d="M 65 313 L 65 318 L 70 318 Z" fill="#3678b5"/>
+      <rect x="75" y="319" width="110" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 1 -->
+      <path d="M 54 342 H 65 L 70 347 V 362 H 54 Z" fill="#4a90d9"/><path d="M 65 342 L 65 347 L 70 347 Z" fill="#3678b5"/>
+      <rect x="75" y="348" width="78" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 2 -->
+      <rect x="46" y="371" width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 54 374 H 65 L 70 379 V 394 H 54 Z" fill="#4a90d9"/><path d="M 65 374 L 65 379 L 70 379 Z" fill="#3678b5"/>
+      <rect x="75" y="380" width="98" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 3 -->
+      <path d="M 54 403 H 65 L 70 408 V 423 H 54 Z" fill="#4a90d9"/><path d="M 65 403 L 65 408 L 70 408 Z" fill="#3678b5"/>
+      <rect x="75" y="409" width="88" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+      <!-- Row 4 -->
+      <rect x="46" y="432" width="196" height="25" rx="4" fill="#e4e4e4" opacity="0.5"/>
+      <path d="M 54 435 H 65 L 70 440 V 455 H 54 Z" fill="#4a90d9"/><path d="M 65 435 L 65 440 L 70 440 Z" fill="#3678b5"/>
+      <rect x="75" y="441" width="116" height="8" rx="4" fill="#8a8a8a" opacity="0.7"/>
+    </g>
+    <rect x="40" y="264" width="208" height="208" rx="14" fill="none" stroke="white" stroke-width="1.5" opacity="0.18"/>
+  </g>
+
+  <!-- ── Window 3: bottom-right, RED (delete mode) ── -->
+  <g>
+    <rect x="268" y="270" width="208" height="208" rx="14" fill="#082050" opacity="0.28"/>
+    <g clip-path="url(#wclip3)">
+      <rect x="264" y="264" width="208" height="208" fill="#fff5f5"/>
+      <rect x="264" y="264" width="208" height="36"  fill="#2d2d2d"/>
+      <circle cx="280" cy="282" r="6" fill="#4a4a4a"/>
+      <circle cx="280" cy="282" r="4" fill="#e01b24" opacity="0.9"/>
+      <rect x="292" y="278" width="55" height="8" rx="4" fill="white" opacity="0.2"/>
+      <circle cx="456" cy="282" r="7" fill="#e01b24" opacity="0.85"/>
+      <line x1="453" y1="279" x2="459" y2="285" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="459" y1="279" x2="453" y2="285" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="264" y1="300" x2="472" y2="300" stroke="#c0c0c0" stroke-width="1"/>
+      <!-- Red rows with trash icons -->
+      <!-- Row 0 -->
+      <rect x="272" y="310" width="192" height="25" rx="6" fill="#e01b24" opacity="0.86"/>
+      <path d="M 282 313 H 293 L 298 318 V 333 H 282 Z" fill="white"/><path d="M 293 313 L 293 318 L 298 318 Z" fill="rgba(255,255,255,0.45)"/>
+      <rect x="303" y="319" width="80" height="8" rx="4" fill="white" opacity="0.92"/>
+      <g transform="translate(434, 310)"><rect x="3" y="0" width="8" height="3" rx="1.5" fill="white" opacity="0.92"/><rect x="0" y="3" width="14" height="3.5" rx="1.5" fill="white"/><rect x="1.5" y="7.5" width="11" height="11" rx="2" fill="white"/><line x1="5" y1="9.5" x2="5" y2="16.5" stroke="#e01b24" stroke-width="1.5"/><line x1="9" y1="9.5" x2="9" y2="16.5" stroke="#e01b24" stroke-width="1.5"/></g>
+      <!-- Row 1 -->
+      <rect x="272" y="339" width="192" height="25" rx="6" fill="#e01b24" opacity="0.86"/>
+      <path d="M 282 342 H 293 L 298 347 V 362 H 282 Z" fill="white"/><path d="M 293 342 L 293 347 L 298 347 Z" fill="rgba(255,255,255,0.45)"/>
+      <rect x="303" y="348" width="80" height="8" rx="4" fill="white" opacity="0.92"/>
+      <g transform="translate(434, 339)"><rect x="3" y="0" width="8" height="3" rx="1.5" fill="white" opacity="0.92"/><rect x="0" y="3" width="14" height="3.5" rx="1.5" fill="white"/><rect x="1.5" y="7.5" width="11" height="11" rx="2" fill="white"/><line x1="5" y1="9.5" x2="5" y2="16.5" stroke="#e01b24" stroke-width="1.5"/><line x1="9" y1="9.5" x2="9" y2="16.5" stroke="#e01b24" stroke-width="1.5"/></g>
+      <!-- Row 2 -->
+      <rect x="272" y="368" width="192" height="25" rx="6" fill="#e01b24" opacity="0.86"/>
+      <path d="M 282 371 H 293 L 298 376 V 391 H 282 Z" fill="white"/><path d="M 293 371 L 293 376 L 298 376 Z" fill="rgba(255,255,255,0.45)"/>
+      <rect x="303" y="377" width="80" height="8" rx="4" fill="white" opacity="0.92"/>
+      <g transform="translate(434, 368)"><rect x="3" y="0" width="8" height="3" rx="1.5" fill="white" opacity="0.92"/><rect x="0" y="3" width="14" height="3.5" rx="1.5" fill="white"/><rect x="1.5" y="7.5" width="11" height="11" rx="2" fill="white"/><line x1="5" y1="9.5" x2="5" y2="16.5" stroke="#e01b24" stroke-width="1.5"/><line x1="9" y1="9.5" x2="9" y2="16.5" stroke="#e01b24" stroke-width="1.5"/></g>
+      <!-- Row 3 -->
+      <rect x="272" y="397" width="192" height="25" rx="6" fill="#e01b24" opacity="0.86"/>
+      <path d="M 282 400 H 293 L 298 405 V 420 H 282 Z" fill="white"/><path d="M 293 400 L 293 405 L 298 405 Z" fill="rgba(255,255,255,0.45)"/>
+      <rect x="303" y="406" width="80" height="8" rx="4" fill="white" opacity="0.92"/>
+      <g transform="translate(434, 397)"><rect x="3" y="0" width="8" height="3" rx="1.5" fill="white" opacity="0.92"/><rect x="0" y="3" width="14" height="3.5" rx="1.5" fill="white"/><rect x="1.5" y="7.5" width="11" height="11" rx="2" fill="white"/><line x1="5" y1="9.5" x2="5" y2="16.5" stroke="#e01b24" stroke-width="1.5"/><line x1="9" y1="9.5" x2="9" y2="16.5" stroke="#e01b24" stroke-width="1.5"/></g>
+      <!-- Row 4 -->
+      <rect x="272" y="426" width="192" height="25" rx="6" fill="#e01b24" opacity="0.86"/>
+      <path d="M 282 429 H 293 L 298 434 V 449 H 282 Z" fill="white"/><path d="M 293 429 L 293 434 L 298 434 Z" fill="rgba(255,255,255,0.45)"/>
+      <rect x="303" y="435" width="80" height="8" rx="4" fill="white" opacity="0.92"/>
+      <g transform="translate(434, 426)"><rect x="3" y="0" width="8" height="3" rx="1.5" fill="white" opacity="0.92"/><rect x="0" y="3" width="14" height="3.5" rx="1.5" fill="white"/><rect x="1.5" y="7.5" width="11" height="11" rx="2" fill="white"/><line x1="5" y1="9.5" x2="5" y2="16.5" stroke="#e01b24" stroke-width="1.5"/><line x1="9" y1="9.5" x2="9" y2="16.5" stroke="#e01b24" stroke-width="1.5"/></g>
+    </g>
+    <rect x="264" y="264" width="208" height="208" rx="14" fill="none" stroke="white" stroke-width="1.5" opacity="0.18"/>
+  </g>
+</svg>

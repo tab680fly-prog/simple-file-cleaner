@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.filecleaner</id>
+  <name>File Cleaner</name>
+  <summary>Find and remove junk files from your home directory</summary>
+  <description>
+    <p>
+      File Cleaner scans your home directory for junk files and lets you
+      safely remove them. Supports quick scans of common locations, deep
+      scans of your entire home folder, and scanning specific directories.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Quick scan for trash, caches, old logs and large downloads</li>
+      <li>Deep scan for build artefacts, node_modules, __pycache__ and more</li>
+      <li>Scan any specific folder</li>
+      <li>Animated magnifying glass or spinner while scanning</li>
+      <li>Open any found file directly in your file manager</li>
+      <li>Privileged deletion via polkit — no need to run as root</li>
+      <li>Configurable categories and excluded paths</li>
+    </ul>
+  </description>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <launchable type="desktop-id">io.github.filecleaner.desktop</launchable>
+  <url type="homepage">https://github.com/tab680fly/file-cleaner</url>
+  <developer_name>Tab680fly</developer_name>
+  <releases>
+    <release version="1.0.0" date="2026-05-28">
+      <description><p>Initial release.</p></description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1"/>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+</component>
