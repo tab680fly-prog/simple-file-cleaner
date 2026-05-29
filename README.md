@@ -28,3 +28,16 @@ Simple File Cleaner scans specific, non-critical directories to find the followi
 * as of right now this app is linux only
 
 ## use at own risk may delete important files please excude important folders in the settings menu!
+
+## Requirements to Build
+
+To build and run Simple File Cleaner from source, your system needs the following development tools and libraries.
+
+### System Dependencies
+* **Python 3** (version 3.10 or higher)
+* **GTK 4** and **Libadwaita** (for rendering the modern GNOME user interface elements)
+* **PyGObject** (the Python bindings required to interface with GTK4 libraries)
+
+On Fedora-based atomic systems (like Bazzite), these development libraries can be installed inside a development container (`toolbox` or `distrobox`) to keep your base system clean:
+```bash
+sudo dnf install python3-devel python3-gobject gtk4-devel libadwaita-devel
