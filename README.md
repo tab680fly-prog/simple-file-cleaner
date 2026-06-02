@@ -24,7 +24,7 @@ Simple File Cleaner scans specific, non-critical directories to find the followi
 ## Disclaimer
 
 * Developed with the assistance of Claude and Gemini.
-* This is a personal project; please do not spam or harass the author for bug fixes or feature updates.
+* This is a personal project; please do not spam or harass me for bug fixes or feature updates.
 * as of right now this app is linux only
 
 ## use at own risk may delete important files please exculde important folders in the settings menu!
