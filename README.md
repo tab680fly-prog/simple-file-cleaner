@@ -31,13 +31,29 @@ Simple File Cleaner scans specific, non-critical directories to find the followi
 
 ## Requirements to Build
 
-To build and run Simple File Cleaner from source, your system needs the following development tools and libraries.
+Simple File Cleaner is written in C++20 and built with CMake. To build and run it from source, your system needs:
 
 ### System Dependencies
-* **Python 3** (version 3.10 or higher)
-* **GTK 4** and **Libadwaita** (for rendering the modern GNOME user interface elements)
-* **PyGObject** (the Python bindings required to interface with GTK4 libraries)
+* **A C++20 compiler** (GCC or Clang)
+* **CMake** (3.16+) and **Ninja**
+* **GTK 4** and **Libadwaita** development headers
 
 On Fedora-based atomic systems (like Bazzite), these development libraries can be installed inside a development container (`toolbox` or `distrobox`) to keep your base system clean:
 ```bash
-sudo dnf install python3-devel python3-gobject gtk4-devel libadwaita-devel
+sudo dnf install gcc-c++ cmake ninja-build gtk4-devel libadwaita-devel
+```
+
+On Debian/Ubuntu:
+```bash
+sudo apt install g++ cmake ninja-build libgtk-4-dev libadwaita-1-dev
+```
+
+### Building
+
+```bash
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+./build/file-cleaner
+```
+
+Alternatively, `build.sh` builds and installs the app as a user Flatpak (see below).

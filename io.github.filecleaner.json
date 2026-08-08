@@ -18,29 +18,32 @@
   "modules": [
     {
       "name": "file-cleaner",
-      "buildsystem": "simple",
-      "build-commands": [
-        "install -Dm755 file-cleaner.py /app/bin/file-cleaner",
-        "install -Dm644 io.github.filecleaner.desktop /app/share/applications/io.github.filecleaner.desktop",
-        "install -Dm644 io.github.filecleaner.svg /app/share/icons/hicolor/scalable/apps/io.github.filecleaner.svg",
-        "install -Dm644 io.github.filecleaner.metainfo.xml /app/share/metainfo/io.github.filecleaner.metainfo.xml"
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=/app"
       ],
       "sources": [
         {
           "type": "file",
-          "path": "src/file-cleaner.py"
+          "path": "CMakeLists.txt"
+        },
+        {
+          "type": "dir",
+          "path": "src",
+          "dest": "src"
         },
         {
           "type": "file",
-          "path": "src/io.github.filecleaner.desktop"
+          "path": "io.github.filecleaner.desktop"
         },
         {
           "type": "file",
-          "path": "src/io.github.filecleaner.svg"
+          "path": "io.github.filecleaner.svg"
         },
         {
           "type": "file",
-          "path": "src/io.github.filecleaner.metainfo.xml"
+          "path": "io.github.filecleaner.metainfo.xml"
         }
       ]
     }
