@@ -21,11 +21,17 @@ Simple File Cleaner scans specific, non-critical directories to find the followi
 * **Package Manager Leftovers:** Orphaned data or cached installation packages no longer needed by the system.
 * **Thumbnail Caches:** Cached image and video thumbnails that have piled up over time (`~/.cache/thumbnails`).
 
+## Windows
+
+The GTK4/Libadwaita GUI here is Linux/GNOME-only (Libadwaita doesn't run on
+Windows). A separate command-line edition for Windows lives in
+[`windows/`](windows/) — see [`windows/README.md`](windows/README.md) for
+what it scans and how to build it.
+
 ## Disclaimer
 
 * Developed with the assistance of Claude and Gemini.
 * This is a personal project; please do not spam or harass me for bug fixes or feature updates.
-* as of right now this app is linux only
 
 ## use at own risk may delete important files please exculde important folders in the settings menu!
 
