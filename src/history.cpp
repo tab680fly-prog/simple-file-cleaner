@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <cstdio>
 #include <ctime>
 #include <fstream>
 #include <sstream>
@@ -14,27 +15,29 @@ namespace fc {
 using json = nlohmann::json;
 namespace fs = std::filesystem;
 
-static fs::path home_dir() {
-    if (const char *h = std::getenv("HOME")) return fs::path(h);
-    return fs::path("/");
-}
-
-std::filesystem::path history_path() {
-    return home_dir() / ".local" / "share" / "filecleaner" / "history.json";
-}
+std::filesystem::path history_path() { return history_file(); }
 
 std::string iso_now() {
     std::time_t t = std::time(nullptr);
     std::tm tm{};
+#ifdef _WIN32
+    localtime_s(&tm, &t);
+#else
     localtime_r(&t, &tm);
+#endif
     char buf[32];
     std::strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%S", &tm);
     return buf;
 }
 
 std::string HistoryEntry::date_fmt() const {
+    // Parsed by hand: strptime() is not available on Windows.
     std::tm tm{};
-    if (strptime(date.c_str(), "%Y-%m-%dT%H:%M:%S", &tm) == nullptr) return date;
+    if (std::sscanf(date.c_str(), "%d-%d-%dT%d:%d:%d", &tm.tm_year, &tm.tm_mon, &tm.tm_mday, &tm.tm_hour,
+                    &tm.tm_min, &tm.tm_sec) != 6)
+        return date;
+    tm.tm_year -= 1900;
+    tm.tm_mon -= 1;
     char buf[64];
     std::strftime(buf, sizeof(buf), "%d %b %Y, %H:%M", &tm);
     return buf;
@@ -45,7 +48,7 @@ std::string HistoryEntry::total_deleted_fmt() const { return fmt_size(total_dele
 
 std::vector<HistoryEntry> load_history() {
     std::vector<HistoryEntry> out;
-    std::ifstream f(history_path());
+    std::ifstream f(history_path(), std::ios::binary);
     if (!f) return out;
 
     json j;
@@ -89,7 +92,7 @@ void save_history(const std::vector<HistoryEntry> &entries) {
 
     std::error_code ec;
     fs::create_directories(history_path().parent_path(), ec);
-    std::ofstream f(history_path());
+    std::ofstream f(history_path(), std::ios::binary);
     if (f) f << arr.dump(2);
 }
 

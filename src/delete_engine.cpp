@@ -1,35 +1,61 @@
 #include "delete_engine.hpp"
 
+#ifndef _WIN32
 #include <fcntl.h>
 #include <spawn.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#endif
 
 #include <cerrno>
 #include <cstdio>
 #include <cstring>
 #include <thread>
 
+#ifndef _WIN32
 extern char **environ;
+#endif
 
 namespace fc {
 
 DeleteResult delete_direct(const std::vector<fs::path> &paths) {
     DeleteResult result;
     for (const auto &p : paths) {
+        // Last line of defence, independent of scan logic and settings.
+        if (is_protected_path(p)) {
+            result.errors.push_back(display_path(p) + ": This location is protected and was not deleted.");
+            continue;
+        }
         std::error_code ec;
-        fs::remove_all(p, ec);
+        remove_tree(p, ec);
         if (!ec) {
             result.deleted_count++;
         } else if (ec == std::errc::permission_denied || ec == std::errc::operation_not_permitted) {
             result.permission_failed.push_back(p);
         } else {
-            result.errors.push_back(p.filename().string() + ": " + ec.message());
+            result.errors.push_back(display_path(p) + ": " +
+                                    (ec == std::errc::device_or_resource_busy
+                                         ? std::string("The item is in use by another program.")
+                                         : ec == std::errc::directory_not_empty
+                                               ? std::string("Some of its contents could not be deleted.")
+                                               : ec.message()));
         }
     }
     return result;
 }
+
+#ifdef _WIN32
+
+DeleteResult delete_with_pkexec(const std::vector<fs::path> &paths) {
+    // There is no pkexec on Windows; elevation requires restarting the
+    // whole application as an administrator.
+    DeleteResult result;
+    for (const auto &p : paths) result.errors.push_back(display_path(p) + ": Access denied.");
+    return result;
+}
+
+#else
 
 namespace {
 
@@ -54,10 +80,28 @@ DeleteResult delete_with_pkexec(const std::vector<fs::path> &paths) {
     DeleteResult result;
     if (paths.empty()) return result;
 
+    std::string input;
+    for (const auto &p : paths) {
+        if (is_protected_path(p)) {
+            result.errors.push_back(display_path(p) + ": This location is protected and was not deleted.");
+            continue;
+        }
+        // The helper reads one path per line, so a name containing a
+        // newline would be split into two different (wrong) paths.
+        if (path_str(p).find('\n') != std::string::npos) {
+            result.errors.push_back(display_path(p) + ": Names containing line breaks cannot be deleted with "
+                                                      "administrator privileges.");
+            continue;
+        }
+        input += path_str(p);
+        input += '\n';
+    }
+    if (input.empty()) return result;
+
     char tmpl[] = "/tmp/filecleaner_helper_XXXXXX";
     int fd = mkstemp(tmpl);
     if (fd < 0) {
-        result.errors.push_back(std::string("failed to create helper script: ") + std::strerror(errno));
+        result.errors.push_back(std::string("Unable to create the authorization helper: ") + std::strerror(errno));
         return result;
     }
     std::string script = kPkexecHelper;
@@ -69,15 +113,9 @@ DeleteResult delete_with_pkexec(const std::vector<fs::path> &paths) {
     // (the original Python helper left it world-readable+executable).
     chmod(tmpl, S_IRWXU);
 
-    std::string input;
-    for (const auto &p : paths) {
-        input += p.string();
-        input += '\n';
-    }
-
     int in_pipe[2], out_pipe[2];
     if (pipe(in_pipe) != 0 || pipe(out_pipe) != 0) {
-        result.errors.push_back("failed to create pipes for pkexec");
+        result.errors.push_back("Unable to communicate with the authorization helper.");
         unlink(tmpl);
         return result;
     }
@@ -103,8 +141,10 @@ DeleteResult delete_with_pkexec(const std::vector<fs::path> &paths) {
         close(out_pipe[0]);
         close(out_pipe[1]);
         unlink(tmpl);
-        result.errors.push_back(rc == ENOENT ? "pkexec binary missing from PATH"
-                                              : std::string("failed to launch pkexec: ") + std::strerror(rc));
+        result.errors.push_back(rc == ENOENT
+                                    ? "Administrator authorization is unavailable because pkexec is not installed."
+                                    : std::string("Unable to request administrator authorization: ") +
+                                          std::strerror(rc));
         return result;
     }
 
@@ -138,7 +178,7 @@ DeleteResult delete_with_pkexec(const std::vector<fs::path> &paths) {
         // do" so the UI can tell the user why nothing happened, rather than
         // silently reporting success with zero deletions as the original
         // Python version did.
-        result.errors.push_back("Authentication was cancelled or denied.");
+        result.errors.push_back("Administrator authentication was cancelled or denied.");
         return result;
     }
 
@@ -157,10 +197,13 @@ DeleteResult delete_with_pkexec(const std::vector<fs::path> &paths) {
     }
 
     if (exit_code != 0 && exit_code != 1) {
-        result.errors.push_back("pkexec terminal process runtime fault: " + std::to_string(exit_code));
+        result.errors.push_back("The authorization helper exited unexpectedly (code " + std::to_string(exit_code) +
+                                ").");
     }
 
     return result;
 }
+
+#endif
 
 }  // namespace fc

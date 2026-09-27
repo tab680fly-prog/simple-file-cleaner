@@ -4,23 +4,27 @@
 #include <gtk/gtk.h>
 
 #include <functional>
+#include <string>
 #include <vector>
 
 #include "settings.hpp"
 
 namespace fc {
 
-// Preferences window: Scanning categories, Custom Rules, Exclusions,
-// Appearance, History. Mirrors the original Adw.PreferencesWindow with 5
-// pages. Settings are saved to disk when the window closes.
+// Preferences dialog with five pages: Scanning, Custom Locations,
+// Exclusions, Appearance and History. Settings are saved to disk when the
+// dialog closes.
 class SettingsWindow {
    public:
-    SettingsWindow(GtkWindow *parent, Settings &settings, std::function<void()> on_close);
+    // Page names accepted by present(): "scanning", "custom", "exclusions",
+    // "appearance", "history".
+    SettingsWindow(GtkWidget *parent, Settings &settings, std::function<void()> on_close);
 
-    void present();
+    void present(const char *page_name = nullptr);
 
    private:
-    GtkWidget *window_;
+    GtkWidget *parent_;
+    GtkWidget *dialog_;
     Settings &settings_;
     std::function<void()> on_close_;
 
@@ -41,13 +45,14 @@ class SettingsWindow {
     void refresh_custom_list();
     void populate_history();
 
+    void toast(const std::string &text);
     void add_excl_path(const std::string &path);
     void remove_excl_path(int index);
     void add_custom_path(const std::string &path);
     void remove_custom_path(int index);
     void browse_for_folder(std::function<void(const std::string &)> on_chosen);
 
-    static gboolean on_close_request(GtkWindow *window, gpointer user_data);
+    static void on_closed(AdwDialog *dialog, gpointer user_data);
 };
 
 }  // namespace fc

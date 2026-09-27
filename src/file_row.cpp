@@ -5,11 +5,24 @@
 
 #include <cstdlib>
 
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#include <shellapi.h>
+#endif
+
 namespace fc {
 
 namespace {
 
 void open_in_files(const fs::path &path) {
+#ifdef _WIN32
+    // Opens Explorer with the item selected.
+    std::wstring args = L"/select,\"" + path.wstring() + L"\"";
+    ShellExecuteW(nullptr, L"open", L"explorer.exe", args.c_str(), nullptr, SW_SHOWNORMAL);
+#else
     std::error_code ec;
     fs::path parent = fs::is_directory(path, ec) ? path : path.parent_path();
 
@@ -26,6 +39,7 @@ void open_in_files(const fs::path &path) {
     const char *argv[] = {"xdg-open", parent.c_str(), nullptr};
     g_spawn_async(nullptr, const_cast<char **>(argv), nullptr, G_SPAWN_SEARCH_PATH, nullptr, nullptr,
                   nullptr, nullptr);
+#endif
 }
 
 struct RowCtx {
@@ -51,8 +65,8 @@ void on_row_destroy(GtkWidget *, gpointer user_data) { delete static_cast<RowCtx
 
 FileRow::FileRow(FileEntry &entry, ToggleCb on_toggle) {
     row_ = adw_action_row_new();
-    std::string short_name = entry.path.filename().string();
-    if (short_name.empty()) short_name = entry.path.string();
+    std::string short_name = path_str(entry.path.filename());
+    if (short_name.empty()) short_name = path_str(entry.path);
 
     char *escaped_title = g_markup_escape_text(short_name.c_str(), -1);
     adw_preferences_row_set_title(ADW_PREFERENCES_ROW(row_), escaped_title);
@@ -66,23 +80,26 @@ FileRow::FileRow(FileEntry &entry, ToggleCb on_toggle) {
     auto *ctx = new RowCtx{&entry, std::move(on_toggle)};
     g_signal_connect(row_, "destroy", G_CALLBACK(on_row_destroy), ctx);
 
-    GtkWidget *check = gtk_check_button_new();
-    gtk_check_button_set_active(GTK_CHECK_BUTTON(check), entry.selected);
-    gtk_widget_set_valign(check, GTK_ALIGN_CENTER);
-    g_signal_connect(check, "toggled", G_CALLBACK(on_check_toggled), ctx);
-    adw_action_row_add_prefix(ADW_ACTION_ROW(row_), check);
-
     std::error_code ec;
     const char *icon_name = fs::is_directory(entry.path, ec) ? "folder-symbolic" : "text-x-generic-symbolic";
+    (void)ec;
     GtkWidget *icon = gtk_image_new_from_icon_name(icon_name);
     gtk_image_set_pixel_size(GTK_IMAGE(icon), 16);
     gtk_widget_add_css_class(icon, "dim-label");
     gtk_widget_set_valign(icon, GTK_ALIGN_CENTER);
     adw_action_row_add_prefix(ADW_ACTION_ROW(row_), icon);
 
+    check_ = gtk_check_button_new();
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(check_), entry.selected);
+    gtk_widget_set_valign(check_, GTK_ALIGN_CENTER);
+    gtk_widget_set_tooltip_text(check_, "Include in deletion");
+    g_signal_connect(check_, "toggled", G_CALLBACK(on_check_toggled), ctx);
+    adw_action_row_add_prefix(ADW_ACTION_ROW(row_), check_);
+    adw_action_row_set_activatable_widget(ADW_ACTION_ROW(row_), check_);
+
     GtkWidget *size_label = gtk_label_new(fmt_size(entry.size).c_str());
     gtk_widget_set_valign(size_label, GTK_ALIGN_CENTER);
-    gtk_widget_add_css_class(size_label, entry.size >= (500u << 20) ? "size-label-large" : "dim-label");
+    gtk_widget_add_css_class(size_label, entry.size >= (500ull << 20) ? "size-label-large" : "dim-label");
     gtk_widget_add_css_class(size_label, "caption");
     gtk_widget_add_css_class(size_label, "numeric");
     adw_action_row_add_suffix(ADW_ACTION_ROW(row_), size_label);
@@ -90,6 +107,7 @@ FileRow::FileRow(FileEntry &entry, ToggleCb on_toggle) {
     GtkWidget *open_btn = gtk_button_new_from_icon_name("folder-open-symbolic");
     gtk_widget_set_valign(open_btn, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(open_btn, "flat");
+    gtk_widget_set_tooltip_text(open_btn, "Show in File Manager");
     g_signal_connect(open_btn, "clicked", G_CALLBACK(on_open_clicked), ctx);
     adw_action_row_add_suffix(ADW_ACTION_ROW(row_), open_btn);
 }

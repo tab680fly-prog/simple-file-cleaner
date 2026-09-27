@@ -38,12 +38,14 @@ void ScanRing::start() {
 }
 
 void ScanRing::stop(bool success) {
+    // Cancel both timers: stop() can be called more than once per scan
+    // (e.g. ScanPage::set_done after ScanPage::stop), and previously each
+    // call started another completion timer while only the newest id was
+    // tracked — the orphaned one kept firing and could outlive the widget.
+    cancel_timers();
     running_ = false;
     done_ok_ = success;
-    if (timer_id_) {
-        g_source_remove(timer_id_);
-        timer_id_ = 0;
-    }
+    done_progress_ = 0.0;
     if (success) {
         done_timer_ = g_timeout_add(16, &ScanRing::done_tick_cb, this);
     } else {
