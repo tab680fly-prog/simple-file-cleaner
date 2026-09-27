@@ -7,12 +7,16 @@ PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "==> Checking dependencies..."
 
-if ! command -v flatpak-builder &>/dev/null; then
-  echo "flatpak-builder not found. Installing..."
-  rpm-ostree install flatpak-builder
-  echo ""
-  echo "flatpak-builder installed. Please reboot, then run this script again."
-  exit 0
+# Prefer a host flatpak-builder; otherwise use the Flathub "Flatpak Builder"
+# app, which works on immutable systems without rpm-ostree or a reboot.
+if command -v flatpak-builder &>/dev/null; then
+  BUILDER=(flatpak-builder)
+else
+  if ! flatpak info org.flatpak.Builder &>/dev/null; then
+    echo "Installing Flatpak Builder from Flathub..."
+    flatpak install --user -y flathub org.flatpak.Builder
+  fi
+  BUILDER=(flatpak run org.flatpak.Builder)
 fi
 
 for runtime in "org.gnome.Platform//47" "org.gnome.Sdk//47"; do
@@ -25,7 +29,7 @@ done
 echo "==> Building Flatpak..."
 mkdir -p "$PROJECT_DIR/build-dir"
 
-flatpak-builder \
+"${BUILDER[@]}" \
   --user \
   --install \
   --force-clean \

@@ -14,18 +14,32 @@
       <li>Quick scan for trash, caches, old logs and large downloads</li>
       <li>Deep scan for build artefacts, node_modules, __pycache__ and more</li>
       <li>Scan any specific folder</li>
-      <li>Animated magnifying glass or spinner while scanning</li>
+      <li>Animated magnifying glass (default) or spinner while scanning</li>
       <li>Open any found file directly in your file manager</li>
       <li>Privileged deletion via polkit — no need to run as root</li>
-      <li>Configurable categories and excluded paths</li>
+      <li>Configurable categories and protected locations</li>
     </ul>
   </description>
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
   <launchable type="desktop-id">io.github.filecleaner.desktop</launchable>
-  <url type="homepage">https://github.com/tab680fly/file-cleaner</url>
+  <url type="homepage">https://github.com/tab680fly-prog/simple-file-cleaner</url>
   <developer_name>Tab680fly</developer_name>
   <releases>
+    <release version="1.3.0" date="2026-09-27">
+      <description>
+        <p>Safety, reliability and interface improvements.</p>
+        <ul>
+          <li>First-launch prompt to protect important folders</li>
+          <li>Folders that contain a protected location are no longer offered for deletion</li>
+          <li>The user Flatpak repository is no longer offered for deletion</li>
+          <li>Native .o and .a files are no longer offered for deletion, as toolchains and SDKs depend on them</li>
+          <li>Scans can now be cancelled</li>
+          <li>Redesigned start page, results summary and preferences</li>
+          <li>Clearer, more consistent wording throughout</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.0" date="2026-05-28">
       <description><p>Initial release.</p></description>
     </release>
